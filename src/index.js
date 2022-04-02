@@ -23,7 +23,6 @@ Refs.form.addEventListener("submit", submitHandler);
 function submitHandler(e) {
   e.preventDefault();
   const inputText = e.target.inputText.value;
-  //   const hamdlerName = handlerNamesList.map((name) => e.target[name]);
   const hamdlerName = handlerNamesList.map((name) => e.target[name])[0].name;
   const result = startAction({ inputText, hamdlerName });
   console.dir(result);
