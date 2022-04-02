@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text-informer</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <form data-action="start-action">
+        <textarea
+          name="inputText"
+          placeholder="Помістіть текст у це поле"
+          cols="30"
+          rows="10"
+        >
+блок відображення результатів</textarea
+        >
+        <ul data-content="handlers-list">
+          <li>
+            <label for=""><input type="checkbox" name="" id="" /></label>
+          </li>
+        </ul>
+        <button>Обробити</button>
+      </form>
+      <hr />
+      <div data-content="result-section">Результат</div>
+    </div>
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>
