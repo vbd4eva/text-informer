@@ -61,23 +61,26 @@ function getResultsMarkup(results = []) {
   const markupDefault = `<p> Результатів Немає :( </p>`;
   if (!results.length) return markupDefault;
 
-  return results.map((resObj) => {
-    const { handlerName, result, string } = resObj;
+  return results
+    .map((resObj) => {
+      const { handlerName, result, string } = resObj;
 
-    const uniqueWordsNumberMarkup = `<b>${Object.values(result).length}</b>`;
-    const handlerNameMarkup = `<h3>Результат застовування "${handlerName}"</h3>`;
-    const inputedStringMarkup = `<p>${string}</p>`;
-    const singleResultMarkup = `<div class="result__block">${getSingleResultMarkup(
-      result
-    )}</div>`;
+      const uniqueWordsNumberMarkup = `<b>${Object.values(result).length}</b>`;
+      const handlerNameMarkup = `<h3>Результат застовування "${handlerName}"</h3>`;
+      const inputedStringMarkup = `<p>${string}</p>`;
+      const singleResultMarkup = `<div class="result__block">${getSingleResultMarkup(
+        result
+      )}</div>`;
 
-    return `<div class="result__item">
+      return `<div class="result__item">
               ${handlerNameMarkup}
               <p>Знайдено ${uniqueWordsNumberMarkup} унікальних слів</p>
               <h4>Текст який оброблявся</h4><p>${inputedStringMarkup}</p>
               <h4>Перелік унікальних слів та їх кількість</h4>${singleResultMarkup}
             </div>`;
-  });
+    })
+    .reverse()
+    .join("");
 }
 // Повертає HTML markup , приймає об'єкт зі словами {слово:кількість}
 function getSingleResultMarkup(result) {
@@ -94,7 +97,6 @@ function getSingleResultMarkup(result) {
              <i>${wordInf[1]}</i>
         </button>`
     )
-    .reverse()
     .join("");
 }
 
