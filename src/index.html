@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text informer</title>
+</head>
+
+<body>
+
+    <div class="text-informer__wrap">
+        <div class="text-informer__panel-form">
+            <textarea rows="5" cols="50" class="text-informer__textarea">Замените этот текст тем информер которого хотите увидеть.
+            <p>!?.VFLС У Цї'ъ,Ы(- Іґ' - `- -)[123gy bbrry*%^@@ $45ybg6=789,m er+]"';:</p></textarea>
+        </div>
+        <div class="text-informer__panel-control">
+            <button class="text-informer__run-btn">Гайда</button>
+        </div>
+    </div>
+
+    <script>
+
+
+        const runBtnRef = document.querySelector('.text-informer__run-btn');
+        runBtnRef.addEventListener('click', handleText);
+
+        function handleText() {
+
+            const rawText = document.querySelector('.text-informer__textarea').value
+
+            console.log(rawText);
+
+
+            const textWordsArr = rawText
+                .toLocaleLowerCase()
+
+                .replace(/<([^>]*)>/g, '')
+                .replace(/\s+/g, ' ')
+                .replace(/[^-a-zіїґа-я\s]/gi, '')
+                .split(' ')
+                ;
+
+            console.log(textWordsArr);
+        }
+
+
+        `!?.VFLС У   Цї'ъ,Ы(-   Іґ' - \`-   -)[123gy    bbrry*%^@@   $45ybg6=789,m   er+]"';:`.toLocaleLowerCase().replace(/[^-a-zіїґа-я\s]/g, '').replace(/\s{2,}/g, ' ');
+    </script>
+</body>
+
+</html>
