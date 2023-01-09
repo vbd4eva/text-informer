@@ -6,47 +6,124 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text informer</title>
+
 </head>
 
 <body>
 
     <div class="text-informer__wrap">
         <div class="text-informer__panel-form">
-            <textarea rows="5" cols="50" class="text-informer__textarea">Замените этот текст тем информер которого хотите увидеть.
-            <p>!?.VFLС У Цї'ъ,Ы(- Іґ' - `- -)[123gy bbrry*%^@@ $45ybg6=789,m er+]"';:</p></textarea>
+            <textarea rows="5" cols="50" class="text-informer__textarea js-textarea">Замените этот текст тем информер которого хотите увидеть.
+            <p id="id" class="some class names" data-attr="dataAttribute">!?.VFLС У Цї'ъ,Ы(- Іґ' - `- -)[123gy bbrry*%^@@ $45ybg6=789,m er+]"';:</p>
+            "слово за слово"
+        </textarea>
         </div>
         <div class="text-informer__panel-control">
             <button class="text-informer__run-btn">Гайда</button>
+            <hr />
+            <style>
+                dt:after {
+                    content: ": ";
+                }
+            </style>
+            <dl class="counters">
+                <div class="counter">
+                    <dt class="counter__name">Загальна кількість слів</dt>
+                    <dd class="counter__value js-total-words-amount">...</dd>
+
+                    <dt class="counter__name">Кількість унікальних слів</dt>
+                    <dd class="counter__value js-unique-words-amount">...</dd>
+                </div>
+            </dl>
+
+            <ul class="text-chunk__list">
+                <li class="text-chunk__item">chunk</li>
+                <li class="text-chunk__item">chunk</li>
+                <li class="text-chunk__item">chunk</li>
+                <li class="text-chunk__item">chunk</li>
+                <li class="text-chunk__item">chunk</li>
+            </ul>
         </div>
     </div>
 
     <script>
 
-
-        const runBtnRef = document.querySelector('.text-informer__run-btn');
-        runBtnRef.addEventListener('click', handleText);
-
-        function handleText() {
-
-            const rawText = document.querySelector('.text-informer__textarea').value
-
-            console.log(rawText);
-
-
-            const textWordsArr = rawText
-                .toLocaleLowerCase()
-
-                .replace(/<([^>]*)>/g, '')
-                .replace(/\s+/g, ' ')
-                .replace(/[^-a-zіїґа-я\s]/gi, '')
-                .split(' ')
-                ;
-
-            console.log(textWordsArr);
+        const refs = {
+            textarea: document.querySelector('.js-textarea'),
+            runBtn: document.querySelector('.text-informer__run-btn'),
+            totalWordsAmount: document.querySelector('.js-total-words-amount'),
+            uniqueWordsAmount: document.querySelector('.js-unique-words-amount'),
         }
 
 
-        `!?.VFLС У   Цї'ъ,Ы(-   Іґ' - \`-   -)[123gy    bbrry*%^@@   $45ybg6=789,m   er+]"';:`.toLocaleLowerCase().replace(/[^-a-zіїґа-я\s]/g, '').replace(/\s{2,}/g, ' ');
+
+        refs.runBtn.addEventListener('click', handleText);
+
+        const textProcessingData = {
+            rawText: '',
+        };
+
+        // functions
+
+        // !TO DO!
+        // Написать проверку рефов
+        // сохранять начальное значение <textarea>
+        // при пустом поле    <textarea> віводить сообщение и восстанавливать начальное значение поля
+        function refChecker(refs) {
+            const checkout = {
+
+            }
+            // обїект
+            // массив 
+            // узел (.nodeName)
+        }
+
+        function handleText() {
+
+            console.log(refs.textarea.value.replace(/\s+/g, ''));
+            if (!refs.textarea.value.replace(/\s+/g, '')) {
+                alert('Текст для обработки не найден!');
+                return;
+            }
+            const rawText = refs.textarea.value;
+            console.log(rawText);
+
+            const modifiedText = rawText
+                .replace(/<([^>]*)>/g, '') // убирает HTML тэги , например : <p id="id">some string</p> = some string
+
+                .replace(/[^-a-zіїґа-я\s]/gi, '') // убирает все кроме букв , любых отступов и символа "-"
+
+                .replace(/\s+/g, ' '); // заменяет на пробел  все отступы : [ \f\n\r\t\v​\u00a0\u1680​\u180e\u2000​\u2001\u2002​\u2003\u2004​\u2005\u2006​\u2007\u2008​\u2009\u200a​\u2028\u2029​​\u202f\u205f​\u3000]
+            console.log('modifiedText :', modifiedText);
+
+            const spaceSplittedArray = modifiedText.split(' ');
+            console.log('spaceSplittedArray :', spaceSplittedArray);
+
+            const totalWordsAmount = spaceSplittedArray.length; // кол-во "слов" в тексте            
+            totalWordsAmount && setTextContent(refs.totalWordsAmount, totalWordsAmount); // отображает кол-во "слов" 
+
+
+            const uniqueWordsObj = findUniqueStringValuesInArray(spaceSplittedArray); // получает количество уникальных строк массива в объект вида {строка1 : кол-во, строка2 : кол-во, ...} 
+            uniqueWordsAmount = Object.keys(uniqueWordsObj).length;
+            uniqueWordsAmount && setTextContent(refs.uniqueWordsAmount, uniqueWordsAmount);
+            console.log("uniqueWordsObj", uniqueWordsObj);
+        }
+
+        function setTextContent(element = null, textcontent = null) {
+            element && textcontent && (element.textContent = textcontent);
+        }
+
+        function findUniqueStringValuesInArray(array) {
+            if (!array.length) return;
+            const unique = {};
+            for (const string of array) {
+                const currentNumber = 1 + (unique[string] || 0);
+                unique[string] = currentNumber;
+            }
+            return unique;
+        }
+
+
     </script>
 </body>
 
